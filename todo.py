@@ -71,7 +71,7 @@ def main():
         elif choice == "5":
             break
         else:
-            print("Opción inválida. Por favor, ingrese un número del 1 al 5.")
+            print("Opción inválida. Por favor, ingrese un número del 1-5.")
 
 
 if __name__ == "__main__":
