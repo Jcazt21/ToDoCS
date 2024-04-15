@@ -67,11 +67,11 @@ def main():
             add_task(task)
         elif choice == "2":
             print_tasks()
-            index = int(input("Ingrese el número de la tarea completada: ")) - 1
+            index = int(input("Ingrese el # de la completada: ")) - 1
             mark_task_completed(index)
         elif choice == "3":
             print_tasks()
-            index = int(input("Ingrese el número de la tarea a eliminar: ")) - 1
+            index = int(input("Indique la que desea eliminar: ")) - 1
             delete_task(index)
         elif choice == "4":
             print_tasks()
