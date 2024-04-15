@@ -59,7 +59,7 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build -t ToDo:latest .
+            docker build -t todo:latest .
 
   integration_tests:
     docker:
