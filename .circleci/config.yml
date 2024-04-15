@@ -56,7 +56,10 @@ jobs:
             unzip
             python -m pip install --upgrade pip
             pip install -r requirements.txt
-      # Aquí puedes agregar los pasos adicionales para construir tu aplicación
+      - run:
+          name: Build Docker image
+          command: |
+            docker build -t ToDo:latest .
 
   integration_tests:
     docker:
@@ -74,7 +77,7 @@ jobs:
             unzip
             python -m pip install --upgrade pip
             pip install -r requirements.txt
-      # Aquí puedes agregar los pasos para las pruebas de integración
+      # Agrega aquí los pasos para las pruebas de integración
 
 workflows:
   version: 2
