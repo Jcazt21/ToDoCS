@@ -51,7 +51,7 @@ def main():
         print("2. Marcar tarea como completada")
         print("3. Eliminar tarea")
         print("4. Mostrar tareas")
-        print("5. Cerrar")
+        print("5. Exit code")
 
         choice = input("Ingrese el número de la opción: ")
 
