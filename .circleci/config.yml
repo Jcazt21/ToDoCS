@@ -73,7 +73,9 @@ jobs:
             unzip
             python -m pip install --upgrade pip
             pip install -r requirements.txt
-      # Agrega aquí los pasos para las pruebas de integración
+      - run:
+          name: Run integration tests
+          command: python -m unittest integration_tests.py  # Ejecutar las pruebas de integración
 
 workflows:
   version: 2
