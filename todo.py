@@ -59,6 +59,7 @@ def main():
         print("3. Eliminar tarea")
         print("4. Mostrar tareas")
         print("5. Salir")
+        print("6. Creditos")
 
         choice = input("Ingrese el número de la opción: ")
 
@@ -77,6 +78,8 @@ def main():
             print_tasks()
         elif choice == "5":
             break
+        elif choice == "6":
+            print("Grupo 3 - Construccion de Software")
         else:
             print("Opción inválida. Por favor, ingrese un número del 1 al 5.")
 

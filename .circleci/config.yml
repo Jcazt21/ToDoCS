@@ -7,6 +7,16 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Check presence of requirements.txt
+          command: |
+            if [ ! -f "requirements.txt" ]; then
+              echo "ERROR: requirements.txt not found"
+              exit 1
+            elif [ ! -s "requirements.txt" ]; then
+              echo "ERROR: requirements.txt is empty"
+              exit 1
+            fi
+      - run:
           name: Install dependencies
           command: |
             sudo apt-get update && sudo apt-get install -y \
@@ -27,6 +37,16 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Check presence of requirements.txt
+          command: |
+            if [ ! -f "requirements.txt" ]; then
+              echo "ERROR: requirements.txt not found"
+              exit 1
+            elif [ ! -s "requirements.txt" ]; then
+              echo "ERROR: requirements.txt is empty"
+              exit 1
+            fi
+      - run:
           name: Install dependencies
           command: |
             sudo apt-get update && sudo apt-get install -y \
@@ -46,6 +66,16 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Check presence of requirements.txt
+          command: |
+            if [ ! -f "requirements.txt" ]; then
+              echo "ERROR: requirements.txt not found"
+              exit 1
+            elif [ ! -s "requirements.txt" ]; then
+              echo "ERROR: requirements.txt is empty"
+              exit 1
+            fi
+      - run:
           name: Install dependencies
           command: |
             sudo apt-get update && sudo apt-get install -y \
@@ -64,6 +94,16 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Check presence of requirements.txt
+          command: |
+            if [ ! -f "requirements.txt" ]; then
+              echo "ERROR: requirements.txt not found"
+              exit 1
+            elif [ ! -s "requirements.txt" ]; then
+              echo "ERROR: requirements.txt is empty"
+              exit 1
+            fi
+      - run:
           name: Install dependencies
           command: |
             sudo apt-get update && sudo apt-get install -y \
@@ -74,7 +114,37 @@ jobs:
             unzip
             python -m pip install --upgrade pip
             pip install -r requirements.txt
-      # Aquí puedes agregar los pasos para las pruebas de integración
+      - run:
+          name: Run integration tests
+          command: python -m unittest integration_tests.py
+
+  compatibility_tests:
+    docker:
+      - image: circleci/python:3.6
+    steps:
+      - checkout
+      - run:
+          name: Check presence of requirements.txt
+          command: |
+            if [ ! -f "requirements.txt" ]; then
+              echo "ERROR: requirements.txt not found"
+              exit 1
+            elif [ ! -s "requirements.txt" ]; then
+              echo "ERROR: requirements.txt is empty"
+              exit 1
+            fi
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt-get update && sudo apt-get install -y \
+            sqlite3 \
+            curl \
+            wget \
+            git \
+            unzip
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+      # Agrega aquí los pasos para las pruebas de compatibilidad con Python 3.6
 
 workflows:
   version: 2
@@ -84,5 +154,8 @@ workflows:
       - lint
       - build
       - integration_tests:
+          requires:
+            - build
+      - compatibility_tests:
           requires:
             - build
