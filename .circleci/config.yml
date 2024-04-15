@@ -4,13 +4,10 @@ jobs:
   test:
     docker:
       - image: circleci/python:3.8
-
     steps:
       - checkout
-
-      # Instalar dependencias adicionales
       - run:
-          name: Install additional dependencies
+          name: Install dependencies
           command: |
             sudo apt-get update && sudo apt-get install -y \
             sqlite3 \
@@ -18,30 +15,19 @@ jobs:
             wget \
             git \
             unzip
-
-      # Instalar dependencias de Python
-      - run:
-          name: Install Python dependencies
-          command: |
             python -m pip install --upgrade pip
             pip install -r requirements.txt
-
-      # Ejecutar pruebas
       - run:
           name: Run tests
-          command: |
-            python -m unittest tests.py
+          command: python -m unittest tests.py
 
   lint:
     docker:
       - image: circleci/python:3.8
-
     steps:
       - checkout
-
-      # Instalar dependencias adicionales
       - run:
-          name: Install additional dependencies
+          name: Install dependencies
           command: |
             sudo apt-get update && sudo apt-get install -y \
             sqlite3 \
@@ -49,27 +35,18 @@ jobs:
             wget \
             git \
             unzip
-
-      # Instalar flake8 para el análisis estático de código
+            pip install flake8
       - run:
-          name: Install flake8
-          command: pip install flake8
-
-      # Análisis estático de código
-      - run:
-          name: Static code analysis
+          name: Run linting
           command: flake8 .
 
-  integration_test:
+  build:
     docker:
       - image: circleci/python:3.8
-
     steps:
       - checkout
-
-      # Instalar dependencias adicionales
       - run:
-          name: Install additional dependencies
+          name: Install dependencies
           command: |
             sudo apt-get update && sudo apt-get install -y \
             sqlite3 \
@@ -77,20 +54,27 @@ jobs:
             wget \
             git \
             unzip
-
-      # Instalar dependencias de Python
-      - run:
-          name: Install Python dependencies
-          command: |
             python -m pip install --upgrade pip
             pip install -r requirements.txt
+      # Aquí puedes agregar los pasos adicionales para construir tu aplicación
 
-      # Ejecutar pruebas de integración
+  integration_tests:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - checkout
       - run:
-          name: Run integration tests
+          name: Install dependencies
           command: |
-            # Aquí ejecuta tus pruebas de integración
-            python -m unittest integration_tests.py
+            sudo apt-get update && sudo apt-get install -y \
+            sqlite3 \
+            curl \
+            wget \
+            git \
+            unzip
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+      # Aquí puedes agregar los pasos para las pruebas de integración
 
 workflows:
   version: 2
@@ -98,7 +82,7 @@ workflows:
     jobs:
       - test
       - lint
-      - integration_test:
+      - build
+      - integration_tests:
           requires:
-            - test
-            - lint
+            - build
