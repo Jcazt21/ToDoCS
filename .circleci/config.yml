@@ -32,6 +32,29 @@ jobs:
           command: |
             python -m unittest tests.py
 
+  lint:
+    docker:
+      - image: circleci/python:3.8
+
+    steps:
+      - checkout
+
+      # Instalar dependencias adicionales
+      - run:
+          name: Install additional dependencies
+          command: |
+            sudo apt-get update && sudo apt-get install -y \
+            sqlite3 \
+            curl \
+            wget \
+            git \
+            unzip
+
+      # Instalar flake8 para el análisis estático de código
+      - run:
+          name: Install flake8
+          command: pip install flake8
+
       # Análisis estático de código
       - run:
           name: Static code analysis
@@ -69,6 +92,8 @@ workflows:
   build_and_test:
     jobs:
       - test
+      - lint
       - build:
           requires:
             - test
+            - lint
