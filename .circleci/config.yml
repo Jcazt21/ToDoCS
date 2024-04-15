@@ -1,6 +1,42 @@
 version: 2.1
 
 jobs:
+  test:
+    docker:
+      - image: circleci/python:3.8
+
+    steps:
+      - checkout
+
+      # Instalar dependencias adicionales
+      - run:
+          name: Install additional dependencies
+          command: |
+            sudo apt-get update && sudo apt-get install -y \
+            sqlite3 \
+            curl \
+            wget \
+            git \
+            unzip
+
+      # Instalar dependencias de Python
+      - run:
+          name: Install Python dependencies
+          command: |
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+
+      # Ejecutar pruebas
+      - run:
+          name: Run tests
+          command: |
+            python -m unittest tests.py
+
+      # Análisis estático de código
+      - run:
+          name: Static code analysis
+          command: flake8 .
+
   build:
     docker:
       - image: circleci/python:3.8
@@ -26,19 +62,13 @@ jobs:
             python -m pip install --upgrade pip
             pip install -r requirements.txt
 
-      # Ejecutar pruebas y cobertura de código
-      - run:
-          name: Run tests and code coverage
-          command: |
-            python -m unittest tests.py
-
-      # Análisis estático de código
-      - run:
-          name: Static code analysis
-          command: flake8 .
+      # Aquí puedes poner los pasos adicionales para la construcción de tu aplicación
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build
+      - test
+      - build:
+          requires:
+            - test
