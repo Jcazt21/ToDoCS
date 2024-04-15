@@ -60,7 +60,7 @@ def main():
             add_task(task)
         elif choice == "2":
             print_tasks()
-            index = int(input("Ingrese el número de la tarea completada: ")) - 1
+            index = int(input("Ingrese el número de la completada: ")) - 1
             mark_task_completed(index)
         elif choice == "3":
             print_tasks()
