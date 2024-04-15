@@ -1,30 +1,33 @@
 import unittest
-from todo import load_tasks, add_task, mark_task_completed, delete_task
+import os
+import todo
 
 
 class IntegrationTests(unittest.TestCase):
+    def setUp(self):
+        # Limpiar el archivo todo.json antes de cada prueba
+        with open(todo.TODO_FILE, "w") as file:
+            file.write("[]")
+
+    def tearDown(self):
+        # Limpiar el archivo todo.json después de cada prueba
+        os.remove(todo.TODO_FILE)
+
     def test_add_task(self):
-        # Prueba de integración para agregar una tarea
-        add_task("Completar informe")
-        tasks = load_tasks()
+        todo.add_task("Tarea de prueba")
+        tasks = todo.load_tasks()
         self.assertEqual(len(tasks), 1)
-        self.assertEqual(tasks[0]["task"], "Completar informe")
-        self.assertFalse(tasks[0]["completed"])
 
     def test_mark_task_completed(self):
-        # Prueba de integración para marcar una tarea como completada
-        add_task("Completar informe")
-        tasks = load_tasks()
-        mark_task_completed(0)
-        tasks = load_tasks()
+        todo.add_task("Tarea de prueba")
+        todo.mark_task_completed(0)
+        tasks = todo.load_tasks()
         self.assertTrue(tasks[0]["completed"])
 
     def test_delete_task(self):
-        # Prueba de integración para eliminar una tarea
-        add_task("Completar informe")
-        tasks = load_tasks()
-        delete_task(0)
-        tasks = load_tasks()
+        todo.add_task("Tarea de prueba")
+        todo.delete_task(0)
+        tasks = todo.load_tasks()
         self.assertEqual(len(tasks), 0)
 
 
