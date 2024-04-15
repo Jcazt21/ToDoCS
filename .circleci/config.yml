@@ -26,12 +26,11 @@ jobs:
             python -m pip install --upgrade pip
             pip install -r requirements.txt
 
-      # Ejecutar pruebas y cobertura de código 0
+      # Ejecutar pruebas y cobertura de código
       - run:
           name: Run tests and code coverage
           command: |
-            coverage run -m unittest tests.py
-            coverage report -m
+            python -m unittest tests.py
 
       # Análisis estático de código
       - run:
