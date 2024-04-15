@@ -27,6 +27,8 @@ def mark_task_completed(index):
     if 0 <= index < len(tasks):
         tasks[index]["completed"] = True
         save_tasks(tasks)
+    else:
+        print("El número de tarea ingresado no es válido.")
 
 
 def delete_task(index):
@@ -34,14 +36,19 @@ def delete_task(index):
     if 0 <= index < len(tasks):
         del tasks[index]
         save_tasks(tasks)
+    else:
+        print("El número de tarea ingresado no es válido.")
 
 
 def print_tasks():
     tasks = load_tasks()
-    print("Tareas pendientes:")
-    for index, task in enumerate(tasks):
-        status = "✓" if task["completed"] else " "
-        print(f"{index + 1}. [{status}] {task['task']}")
+    if not tasks:
+        print("No hay tareas pendientes.")
+    else:
+        print("Tareas pendientes:")
+        for index, task in enumerate(tasks):
+            status = "✓" if task["completed"] else " "
+            print(f"{index + 1}. [{status}] {task['task']}")
 
 
 def main():
@@ -51,7 +58,7 @@ def main():
         print("2. Marcar tarea como completada")
         print("3. Eliminar tarea")
         print("4. Mostrar tareas")
-        print("5. Exit code")
+        print("5. Salir")
 
         choice = input("Ingrese el número de la opción: ")
 
@@ -60,18 +67,18 @@ def main():
             add_task(task)
         elif choice == "2":
             print_tasks()
-            index = int(input("Ingrese el número de la que completo: ")) - 1
+            index = int(input("Ingrese el número de la tarea completada: ")) - 1
             mark_task_completed(index)
         elif choice == "3":
             print_tasks()
-            index = int(input("Cual desea eliminar: ")) - 1
+            index = int(input("Ingrese el número de la tarea a eliminar: ")) - 1
             delete_task(index)
         elif choice == "4":
             print_tasks()
         elif choice == "5":
             break
         else:
-            print("Opción inválida. Por favor, ingrese un número del 1-5.")
+            print("Opción inválida. Por favor, ingrese un número del 1 al 5.")
 
 
 if __name__ == "__main__":
