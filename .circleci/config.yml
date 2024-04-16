@@ -86,7 +86,6 @@ jobs:
             unzip
             python -m pip install --upgrade pip
             pip install -r requirements.txt
-      # Aquí puedes agregar los pasos adicionales para construir tu aplicación
 
   integration_tests:
     docker:
