@@ -166,6 +166,7 @@ workflows:
       - test
       - lint
       - build
+      - build_docker_image
       - integration_tests:
           requires:
             - build
