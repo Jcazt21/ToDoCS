@@ -144,7 +144,6 @@ jobs:
             unzip
             python -m pip install --upgrade pip
             pip install -r requirements.txt
-      # Agrega aquí los pasos para las pruebas de compatibilidad con Python 3.6
 
   docker_image:
     docker:
