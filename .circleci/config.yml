@@ -146,7 +146,7 @@ jobs:
             pip install -r requirements.txt
       # Agrega aquí los pasos para las pruebas de compatibilidad con Python 3.6
 
-  build_docker_image:
+  docker_image:
     docker:
       - image: circleci/python:3.8
     steps:
@@ -166,7 +166,9 @@ workflows:
       - test
       - lint
       - build
-      - build_docker_image
+      - docker_image:
+          requires:
+            - integration_tests
       - integration_tests:
           requires:
             - build
