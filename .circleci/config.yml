@@ -164,14 +164,18 @@ workflows:
   CICD:
     jobs:
       - test
-      - lint
-      - build
-      - docker_image:
+      - lint:
           requires:
-            - integration_tests
+            - test
+      - build:
+          requires:
+            - lint
       - integration_tests:
           requires:
             - build
+      - docker_image:
+          requires:
+            - integration_tests
       - compatibility_tests:
           requires:
-            - build
+            - integration_tests
