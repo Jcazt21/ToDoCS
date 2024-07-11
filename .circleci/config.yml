@@ -1,9 +1,13 @@
 version: 2.1
 
-jobs:
-  test:
+executors:
+  python-executor:
     docker:
       - image: circleci/python:3.8
+
+jobs:
+  test:
+    executor: python-executor
     steps:
       - checkout
       - run:
@@ -12,7 +16,7 @@ jobs:
             if [ ! -f "requirements.txt" ]; then
               echo "ERROR: requirements.txt not found"
               exit 1
-            elif [ ! -s "requirements.txt" ]; entonces
+            elif [ ! -s "requirements.txt" ]; then
               echo "ERROR: requirements.txt is empty"
               exit 1
             fi
@@ -32,17 +36,16 @@ jobs:
           command: python -m unittest discover -s tests/unit -p "test_tc01.py"
 
   lint:
-    docker:
-      - image: circleci/python:3.8
+    executor: python-executor
     steps:
       - checkout
       - run:
           name: Check presence of requirements.txt
           command: |
-            if [ ! -f "requirements.txt" ]; entonces
+            if [ ! -f "requirements.txt" ]; then
               echo "ERROR: requirements.txt not found"
               exit 1
-            elif [ ! -s "requirements.txt" ]; entonces
+            elif [ ! -s "requirements.txt" ]; then
               echo "ERROR: requirements.txt is empty"
               exit 1
             fi
@@ -61,17 +64,16 @@ jobs:
           command: flake8 .
 
   build:
-    docker:
-      - image: circleci/python:3.8
+    executor: python-executor
     steps:
       - checkout
       - run:
           name: Check presence of requirements.txt
           command: |
-            if [ ! -f "requirements.txt" ]; entonces
+            if [ ! -f "requirements.txt" ]; then
               echo "ERROR: requirements.txt not found"
               exit 1
-            elif [ ! -s "requirements.txt" ]; entonces
+            elif [ ! -s "requirements.txt" ]; then
               echo "ERROR: requirements.txt is empty"
               exit 1
             fi
@@ -89,17 +91,16 @@ jobs:
       # Aquí puedes agregar los pasos adicionales para construir tu aplicación
 
   integration_tests:
-    docker:
-      - image: circleci/python:3.8
+    executor: python-executor
     steps:
       - checkout
       - run:
           name: Check presence of requirements.txt
           command: |
-            if [ ! -f "requirements.txt" ]; entonces
+            if [ ! -f "requirements.txt" ]; then
               echo "ERROR: requirements.txt not found"
               exit 1
-            elif [ ! -s "requirements.txt" ]; entonces
+            elif [ ! -s "requirements.txt" ]; then
               echo "ERROR: requirements.txt is empty"
               exit 1
             fi
@@ -126,10 +127,10 @@ jobs:
       - run:
           name: Check presence of requirements.txt
           command: |
-            if [ ! -f "requirements.txt" ]; entonces
+            if [ ! -f "requirements.txt" ]; then
               echo "ERROR: requirements.txt not found"
               exit 1
-            elif [ ! -s "requirements.txt" ]; entonces
+            elif [ ! -s "requirements.txt" ]; then
               echo "ERROR: requirements.txt is empty"
               exit 1
             fi
@@ -147,8 +148,7 @@ jobs:
       # Agrega aquí los pasos para las pruebas de compatibilidad con Python 3.6
 
   docker_image:
-    docker:
-      - image: circleci/python:3.8
+    executor: python-executor
     steps:
       - checkout
       - setup_remote_docker:
