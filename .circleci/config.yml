@@ -28,8 +28,8 @@ jobs:
             python -m pip install --upgrade pip
             pip install -r requirements.txt
       - run:
-          name: Run unit tests
-          command: python -m unittest discover -s tests/unit
+          name: Run tests
+          command: python -m unittest tests.py
 
   lint:
     docker:
@@ -71,7 +71,7 @@ jobs:
             if [ ! -f "requirements.txt" ]; then
               echo "ERROR: requirements.txt not found"
               exit 1
-            elif [ ! -s "requirements.txt" ]; entonces
+            elif [ ! -s "requirements.txt" ]; then
               echo "ERROR: requirements.txt is empty"
               exit 1
             fi
@@ -96,10 +96,10 @@ jobs:
       - run:
           name: Check presence of requirements.txt
           command: |
-            if [ ! -f "requirements.txt" ]; entonces
+            if [ ! -f "requirements.txt" ]; then
               echo "ERROR: requirements.txt not found"
               exit 1
-            elif [ ! -s "requirements.txt" ]; entonces
+            elif [ ! -s "requirements.txt" ]; then
               echo "ERROR: requirements.txt is empty"
               exit 1
             fi
@@ -116,7 +116,7 @@ jobs:
             pip install -r requirements.txt
       - run:
           name: Run integration tests
-          command: python -m unittest discover -s tests/integration
+          command: python -m unittest integration_tests.py
 
   compatibility_tests:
     docker:
@@ -126,10 +126,10 @@ jobs:
       - run:
           name: Check presence of requirements.txt
           command: |
-            if [ ! -f "requirements.txt" ]; entonces
+            if [ ! -f "requirements.txt" ]; then
               echo "ERROR: requirements.txt not found"
               exit 1
-            elif [ ! -s "requirements.txt" ]; entonces
+            elif [ ! -s "requirements.txt" ]; then
               echo "ERROR: requirements.txt is empty"
               exit 1
             fi
