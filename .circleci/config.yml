@@ -1,13 +1,9 @@
 version: 2.1
 
-executors:
-  python-executor:
-    docker:
-      - image: circleci/python:3.8
-
 jobs:
   test:
-    executor: python-executor
+    docker:
+      - image: circleci/python:3.8
     steps:
       - checkout
       - run:
@@ -33,10 +29,11 @@ jobs:
             pip install -r requirements.txt
       - run:
           name: Run tests
-          command: python -m unittest discover -s tests/unit -p "test_tc01.py"
+          command: python -m unittest tests.py
 
   lint:
-    executor: python-executor
+    docker:
+      - image: circleci/python:3.8
     steps:
       - checkout
       - run:
@@ -64,7 +61,8 @@ jobs:
           command: flake8 .
 
   build:
-    executor: python-executor
+    docker:
+      - image: circleci/python:3.8
     steps:
       - checkout
       - run:
@@ -91,7 +89,8 @@ jobs:
       # Aquí puedes agregar los pasos adicionales para construir tu aplicación
 
   integration_tests:
-    executor: python-executor
+    docker:
+      - image: circleci/python:3.8
     steps:
       - checkout
       - run:
@@ -117,7 +116,7 @@ jobs:
             pip install -r requirements.txt
       - run:
           name: Run integration tests
-          command: python -m unittest discover -s tests/integration
+          command: python -m unittest integration_tests.py
 
   compatibility_tests:
     docker:
@@ -148,7 +147,8 @@ jobs:
       # Agrega aquí los pasos para las pruebas de compatibilidad con Python 3.6
 
   docker_image:
-    executor: python-executor
+    docker:
+      - image: circleci/python:3.8
     steps:
       - checkout
       - setup_remote_docker:
