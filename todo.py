@@ -46,6 +46,7 @@ def delete_task(index):
     else:
         print("El número de tarea ingresado no es válido.")
 
+
 # Imprime todas las tareas pendientes
 def print_tasks():
     tasks = load_tasks()
@@ -54,7 +55,7 @@ def print_tasks():
     else:
         print("Tareas pendientes:")
         for index, task in enumerate(tasks):
-             # Aquí se imprimiría cada tarea con su índice y estado
+            # Aquí se imprimiría cada tarea con su índice y estado
             status = "✓" if task["completed"] else " "
             print(f"{index + 1}. [{status}] {task['task']}")
 
