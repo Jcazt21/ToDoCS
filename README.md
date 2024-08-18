@@ -28,8 +28,9 @@ La validación de entrada no es exhaustiva y se puede mejorar.
 # Autores:
 
 Grupo 1 - Administración de Configuración
-Rosanna Bautista
-Jean Azar
-Samir Moammer
-Mercedes Pérez
-Rolbik Urbáez
+Rosanna Bautista,
+Jean Azar,
+Samir Moammer,
+Mercedes Pérez,
+Rolbik Urbáez,
+Francisco Paulino
