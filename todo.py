@@ -73,7 +73,6 @@ def main():
 
         # Solicitar al usuario que ingrese una opción
         choice = input("Ingrese el número de la opción: ")
-        
         if choice == "1":
             task = input("Ingrese la nueva tarea: ")
             add_task(task)
