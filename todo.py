@@ -13,13 +13,14 @@ def load_tasks():
 
 def save_tasks(tasks):
     with open(TODO_FILE, "w") as file:
-        json.dump(tasks, file)
+        json.dump(tasks, file, indent=4)
 
 
 def add_task(task):
     tasks = load_tasks()
     tasks.append({"task": task, "completed": False})
     save_tasks(tasks)
+    print(f"Tarea '{task}' agregada con éxito.")
 
 
 def mark_task_completed(index):
@@ -27,6 +28,7 @@ def mark_task_completed(index):
     if 0 <= index < len(tasks):
         tasks[index]["completed"] = True
         save_tasks(tasks)
+        print(f"Tarea '{tasks[index]['task']}' marcada como completada.")
     else:
         print("El número de tarea ingresado no es válido.")
 
@@ -34,8 +36,9 @@ def mark_task_completed(index):
 def delete_task(index):
     tasks = load_tasks()
     if 0 <= index < len(tasks):
-        del tasks[index]
+        deleted_task = tasks.pop(index)
         save_tasks(tasks)
+        print(f"Tarea '{deleted_task['task']}' eliminada con éxito.")
     else:
         print("El número de tarea ingresado no es válido.")
 
@@ -51,37 +54,74 @@ def print_tasks():
             print(f"{index + 1}. [{status}] {task['task']}")
 
 
+def edit_task(index, new_task):
+    tasks = load_tasks()
+    if 0 <= index < len(tasks):
+        old_task = tasks[index]["task"]
+        tasks[index]["task"] = new_task
+        save_tasks(tasks)
+        print(f"Tarea '{old_task}' actualizada a '{new_task}'.")
+    else:
+        print("El número de tarea ingresado no es válido.")
+
+
+def handle_user_choice(choice):
+    if choice == "1":
+        task = input("Ingrese la nueva tarea: ")
+        add_task(task)
+    elif choice == "2":
+        print_tasks()
+        try:
+            index = int(input("Ingrese el número de la tarea completada: ")) - 1
+            mark_task_completed(index)
+        except ValueError:
+            print("Por favor, ingrese un número válido.")
+    elif choice == "3":
+        print_tasks()
+        try:
+            index = int(input("Indique el número de la tarea a eliminar: ")) - 1
+            delete_task(index)
+        except ValueError:
+            print("Por favor, ingrese un número válido.")
+    elif choice == "4":
+        print_tasks()
+    elif choice == "5":
+        print_tasks()
+        try:
+            index = int(input("Ingrese el número de la tarea a editar: ")) - 1
+            new_task = input("Ingrese la nueva descripción de la tarea: ")
+            edit_task(index, new_task)
+        except ValueError:
+            print("Por favor, ingrese un número válido.")
+    elif choice == "6":
+        print("Grupo 3 - Construcción de Software")
+    elif choice == "7":
+        print("Hasta luego.")
+        return False
+    else:
+        print("Opción inválida. Por favor, ingrese un número del 1 al 7.")
+    return True
+
+
 def main():
+    options = {
+        "1": "Agregar tarea",
+        "2": "Marcar tarea como completada",
+        "3": "Eliminar tarea",
+        "4": "Mostrar tareas",
+        "5": "Editar tarea",
+        "6": "Créditos",
+        "7": "Salir"
+    }
+    
     while True:
         print("\n¿Qué desea hacer?")
-        print("1. Agregar tarea")
-        print("2. Marcar tarea como completada")
-        print("3. Eliminar tarea")
-        print("4. Mostrar tareas")
-        print("5. Salir")
-        print("6. Creditos")
+        for key, value in options.items():
+            print(f"{key}. {value}")
 
         choice = input("Ingrese el número de la opción: ")
-
-        if choice == "1":
-            task = input("Ingrese la nueva tarea: ")
-            add_task(task)
-        elif choice == "2":
-            print_tasks()
-            index = int(input("Ingrese el # de la completada: ")) - 1
-            mark_task_completed(index)
-        elif choice == "3":
-            print_tasks()
-            index = int(input("Indique la que desea eliminar: ")) - 1
-            delete_task(index)
-        elif choice == "4":
-            print_tasks()
-        elif choice == "5":
+        if not handle_user_choice(choice):
             break
-        elif choice == "6":
-            print("Grupo 3 - Construccion de Software")
-        else:
-            print("Opción inválida. Por favor, ingrese un número del 1 al 5.")
 
 
 if __name__ == "__main__":
