@@ -89,7 +89,7 @@ def main():
         elif choice == "5":
             break
         elif choice == "6":
-            print("Grupo 3 - Construccion de Software")
+            print("Grupo A1 - Administración de la Configuración")
         else:
             print("Opción inválida. Por favor, ingrese un número del 1 al 5.")
 
