@@ -2,7 +2,6 @@ import unittest
 import os
 import todo
 
-
 class IntegrationTests(unittest.TestCase):
     def setUp(self):
         # Limpiar el archivo todo.json antes de cada prueba
