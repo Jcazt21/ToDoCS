@@ -2,7 +2,7 @@ import json
 
 # Nombre del archivo donde se almacenan las tareas
 TODO_FILE = "todo.json"
-
+ #CommentForCommit Admin. Configuracion
 
 # Carga las tareas desde el archivo JSON
 def load_tasks():
@@ -89,7 +89,7 @@ def main():
         elif choice == "5":
             break
         elif choice == "6":
-            print("Grupo 3 - Construccion de Software")
+            print("Grupo A1 - Administración de la Configuración")
         else:
             print("Opción inválida. Por favor, ingrese un número del 1 al 5.")
 
