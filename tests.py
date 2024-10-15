@@ -16,6 +16,7 @@ class TestTodoApp(unittest.TestCase):
         initial_tasks = todo.load_tasks()
         todo.add_task("Nueva tarea")
         tasks = todo.load_tasks()
+        # Verifica que la tarea se haya añadido correctamente a la lista
         self.assertEqual(len(tasks), len(initial_tasks) + 1)
         self.assertEqual(tasks[-1]["task"], "Nueva tarea")
         self.assertFalse(tasks[-1]["completed"])
